@@ -1,14 +1,12 @@
-package com.api.chuchu.controller;
+package com.api.chuchu.state;
 
-import com.api.chuchu.dto.StateDTO;
 import com.api.chuchu.exception.ResourceNotFoundException;
-import com.api.chuchu.entity.State;
-import com.api.chuchu.repository.StateRepository;
+import com.api.chuchu.state.State;
+import com.api.chuchu.state.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,18 +18,8 @@ public class StateController {
 
     // Get All States
     @GetMapping("/states")
-    public List<StateDTO> getAllStates() {
-        List<State> state = stateRepository.findAll();
-        List<StateDTO> stateDTO = new ArrayList<>();
-        for(State s: state) {
-            StateDTO st = new StateDTO();
-            st.setId(s.getId());
-            st.setName(s.getName());
-            st.setAbbreviation(s.getAbbreviation());
-            st.setCreatedAt(s.getCreatedAt());
-            stateDTO.add(st);
-        }
-        return stateDTO;
+    public List<State> getAllStates() {
+        return stateRepository.findAll();
     }
 
     // Create a new State
@@ -55,7 +43,6 @@ public class StateController {
                 () -> new ResourceNotFoundException("State", "id", stateId)
             );
     }
-
 
     // Update a State
     @PutMapping("/states/{id}")

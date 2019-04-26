@@ -1,4 +1,4 @@
-package com.api.chuchu.entity;
+package com.api.chuchu.state;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
