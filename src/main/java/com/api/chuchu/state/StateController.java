@@ -6,6 +6,9 @@ import com.api.chuchu.state.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -14,7 +17,7 @@ import java.util.List;
 public class StateController {
 
     @Autowired
-    StateRepository stateRepository;
+    private StateRepository stateRepository;
 
     @GetMapping("/")
     public String index() {
@@ -25,6 +28,15 @@ public class StateController {
     @GetMapping("/states")
     public List<State> getAllStates() {
         return stateRepository.findAll();
+    }
+
+    @GetMapping("/pStates")
+    public Page<State> paginatedStates(
+            @RequestParam Integer page,
+            @RequestParam Integer size
+    ) {
+        Pageable params = PageRequest.of(page, size);
+        return stateRepository.findAll(params);
     }
 
     // Create a new State
