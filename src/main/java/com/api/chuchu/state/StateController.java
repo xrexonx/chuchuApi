@@ -16,6 +16,11 @@ public class StateController {
     @Autowired
     StateRepository stateRepository;
 
+    @GetMapping("/")
+    public String index() {
+        return "Welcome to Chuchu API";
+    }
+
     // Get All States
     @GetMapping("/states")
     public List<State> getAllStates() {

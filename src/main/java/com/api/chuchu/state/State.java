@@ -9,7 +9,6 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
-
 @Entity
 @Table(name = "states")
 @EntityListeners(AuditingEntityListener.class)
@@ -25,6 +24,9 @@ public class State implements Serializable {
 
     @NotBlank
     private String abbreviation;
+
+    @Column(nullable = false)
+    private Integer usps;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -58,6 +60,14 @@ public class State implements Serializable {
 
     public void setAbbreviation(String abbreviation) {
         this.abbreviation = abbreviation;
+    }
+
+    public Integer getUsps() {
+        return usps;
+    }
+
+    public void setUsps(Integer usps) {
+        this.usps = usps;
     }
 
     public Date getCreatedAt() {
