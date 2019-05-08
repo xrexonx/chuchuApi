@@ -25,6 +25,7 @@ public class StateController {
     }
 
     // Get All States
+    @CrossOrigin
     @GetMapping("/states")
     public List<State> getAllStates() {
         return stateRepository.findAll();
