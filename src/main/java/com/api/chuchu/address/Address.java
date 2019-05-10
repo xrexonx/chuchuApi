@@ -1,7 +1,7 @@
 package com.api.chuchu.address;
 
-
 import com.api.chuchu.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -24,7 +24,9 @@ public class Address {
     @Column
     private String zipcode;
 
-    @OneToOne(mappedBy = "address", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private User user;
 
     public long getId() {

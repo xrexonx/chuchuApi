@@ -60,6 +60,7 @@ public class UserController {
         user.setEmail(userDetails.getEmail());
         user.setPhone(userDetails.getPhone());
         user.setWebsite(userDetails.getWebsite());
+        user.setAddress(userDetails.getAddress());
 
         return userRepository.save(user);
     }

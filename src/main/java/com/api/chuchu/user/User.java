@@ -1,7 +1,7 @@
 package com.api.chuchu.user;
 
 import com.api.chuchu.address.Address;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.api.chuchu.company.Company;
 
 import javax.persistence.*;
 
@@ -26,10 +26,11 @@ public class User {
     @Column
     private String website;
 
-    @JsonIgnore
-    @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "address_id")
+    @OneToOne(fetch=FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private Address address;
+
+    @OneToOne(fetch=FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    private Company company;
 
     public long getId() {
         return id;
@@ -85,5 +86,13 @@ public class User {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }
