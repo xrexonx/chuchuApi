@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "states")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 public class State implements Serializable {
