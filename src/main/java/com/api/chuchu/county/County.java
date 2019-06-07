@@ -1,24 +1,20 @@
-package com.api.chuchu.state;
+package com.api.chuchu.county;
 
-import com.api.chuchu.county.County;
+import com.api.chuchu.state.State;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
 import java.util.Date;
-
-//import javax.persistence.*;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.io.Serializable;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
-public class State implements Serializable {
+public class County implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,24 +23,17 @@ public class State implements Serializable {
     @NotBlank
     private String name;
 
-    @NotBlank
-    private String abbreviation;
+    @Column(nullable = false)
+    private Integer usps_county_code = 10;
 
     @Column(nullable = false)
-    private Integer usps = 10;
+    private Integer fips_code = 10;
 
-    @OneToMany(mappedBy = "state", cascade = CascadeType.ALL)
-    private Set<County> counties;
+    private Integer size_code = 10;
 
-
-    public State() {}
-
-    public State(String name, String abbreviation, County... counties) {
-        this.name = name;
-        this.abbreviation = abbreviation;
-        this.counties = Stream.of(counties).collect(Collectors.toSet());
-        this.counties.forEach(x -> x.setState(this));
-    }
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "state_id")
+    private State state;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -55,6 +44,13 @@ public class State implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;
+
+
+    public County() {}
+
+    public County(String name) {
+        this.name = name;
+    }
 
     public Long getId() {
         return id;
@@ -72,20 +68,36 @@ public class State implements Serializable {
         this.name = name;
     }
 
-    public String getAbbreviation() {
-        return abbreviation;
+    public Integer getUsps_county_code() {
+        return usps_county_code;
     }
 
-    public void setAbbreviation(String abbreviation) {
-        this.abbreviation = abbreviation;
+    public void setUsps_county_code(Integer usps_county_code) {
+        this.usps_county_code = usps_county_code;
     }
 
-    public Integer getUsps() {
-        return usps;
+    public Integer getFips_code() {
+        return fips_code;
     }
 
-    public void setUsps(Integer usps) {
-        this.usps = usps;
+    public void setFips_code(Integer fips_code) {
+        this.fips_code = fips_code;
+    }
+
+    public Integer getSize_code() {
+        return size_code;
+    }
+
+    public void setSize_code(Integer size_code) {
+        this.size_code = size_code;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     public Date getCreatedAt() {
@@ -102,13 +114,5 @@ public class State implements Serializable {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public Set<County> getCounties() {
-        return counties;
-    }
-
-    public void setCounties(Set<County> counties) {
-        this.counties = counties;
     }
 }

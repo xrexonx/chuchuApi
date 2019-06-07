@@ -1,5 +1,7 @@
 package com.api.chuchu.state;
 
+import com.api.chuchu.county.County;
+import com.api.chuchu.county.CountyRepository;
 import com.api.chuchu.exception.ResourceNotFoundException;
 import com.api.chuchu.state.State;
 import com.api.chuchu.state.StateRepository;
@@ -75,7 +77,7 @@ public class StateController {
 
         state.setName(stateDetails.getName());
         state.setAbbreviation(stateDetails.getAbbreviation());
-
+        state.setCounties(stateDetails.getCounties());
         return stateRepository.save(state);
     }
 
